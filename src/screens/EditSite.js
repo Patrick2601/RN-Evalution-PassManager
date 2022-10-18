@@ -2,10 +2,10 @@ import {View, Text, SafeAreaView, StyleSheet} from 'react-native';
 import React from 'react';
 import {Formik, Field} from 'formik';
 import * as yup from 'yup';
-import {Button1} from '../components/Buttons';
+import {Button3} from '../components/Buttons';
 import CustomInput from '../components/CustomInput';
 
-const AddSite = ({navigation}) => {
+const EditSite = ({navigation}) => {
   const signUpValidationSchema = yup.object().shape({
     mobile: yup
       .string()
@@ -31,11 +31,9 @@ const AddSite = ({navigation}) => {
             password: '',
             confirmPassword: '',
           }}
-          onSubmit={() => {
-            alert('Saved Successfully')
-            navigation.navigate('PASS MANAGER')
-       
-          }}>
+          
+          onSubmit={()=>
+          alert('HH')}>
           {({handleSubmit, isValid}) => (
             <>
               <Text style={styles.text}>URL</Text>
@@ -86,8 +84,7 @@ const AddSite = ({navigation}) => {
                 style={styles.field}
               />
               <View style={styles.buttons}>
-                <Button1 onPress={handleSubmit} name="RESET" />
-                <Button1 onPress={handleSubmit} name="SAVE" />
+                <Button3 onPress={handleSubmit} name="UPDATE" />
               </View>
             </>
           )}
@@ -120,8 +117,11 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   buttons: {
-    flexDirection: 'row',
-    marginTop: Platform.OS === 'ios' ? 125 : 70,
+    alignItems:'center',
+    justifyContent:'center',
+    backgroundColor:'#0E85FF',
+    top:Platform.OS === 'ios' ? 120 : 60,
+ 
   },
   text: {
     height: 24,
@@ -132,4 +132,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AddSite;
+export default EditSite;

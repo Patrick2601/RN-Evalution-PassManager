@@ -7,7 +7,7 @@ import {Formik, Field} from 'formik';
 import * as yup from 'yup';
 import CustomInput from '../components/CustomInput';
 import {signUp} from '../services/Auth';
-import Buttons from '../components/Buttons';
+import {Buttons} from '../components/Buttons';
 import LinearGradient from 'react-native-linear-gradient';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -35,7 +35,7 @@ const SignUp = ({navigation}) => {
         <SafeAreaView style={styles.container}>
           <View style={styles.signupContainer}>
             <Formik
-              validationSchema={signUpValidationSchema}
+              // validationSchema={signUpValidationSchema}
               initialValues={{
                 mobile: '',
                 password: '',

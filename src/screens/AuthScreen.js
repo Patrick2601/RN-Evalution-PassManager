@@ -45,14 +45,16 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 30,
+    marginTop: 10,
   },
   linearGradient: {
     flex: 1,
   },
-  img: {width: 179, height: 68, marginTop: 20},
+  img: {width: 179, height: 68, marginTop: 15},
   view: {
     flex: 1,
     width: '100%',
+    marginTop: 10,
+
   },
 });

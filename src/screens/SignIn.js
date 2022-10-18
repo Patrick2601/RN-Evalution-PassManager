@@ -4,7 +4,7 @@ import {View, Text, StyleSheet, TextInput, Image} from 'react-native';
 import React, {useState} from 'react';
 import {Formik} from 'formik';
 import * as yup from 'yup';
-import Buttons from '../components/Buttons';
+import {Buttons} from '../components/Buttons';
 import LinearGradient from 'react-native-linear-gradient';
 
 const SignIn1 = ({navigation}) => {
@@ -16,17 +16,18 @@ const SignIn1 = ({navigation}) => {
     setPin(pin);
     console.log(number);
     console.log(pin);
-    if (number === '1234567890' && pin === '0000') {
-      navigation.navigate('PASS MANAGER');
-    } else {
-      console.log('Failed....');
-    }
+    navigation.navigate('PASS MANAGER');
+    // if (number === '1234567890' && pin === '0000') {
+    // } else {
+    //   console.log('Failed....');
+    // }
   };
 
   const loginValidationSchema = yup.object().shape({
     mobile: yup
       .string()
-      .email('Please enter valid mobile number')
+      .matches(/(\d){10}\b/, 'Enter a valid Mobile Number')
+      .max(10, ({max}) => `Password must be at least ${max} characters`)
       .required('Mobile Number is Required'),
     password: yup
       .string()
@@ -40,7 +41,7 @@ const SignIn1 = ({navigation}) => {
       <View style={styles.main}>
         <View style={styles.loginContainer}>
           <Formik
-            validationSchema={loginValidationSchema}
+            // validationSchema={loginValidationSchema}
             initialValues={{mobile: '', password: ''}}
             // onSubmit={alert('kkk')}
           >
@@ -74,6 +75,11 @@ const SignIn1 = ({navigation}) => {
                   onBlur={handleBlur('password')}
                   secureTextEntry
                 />
+                <Image
+                  source={require('../images/02/Group/Password/eye/eyeon.png')}
+                  style={styles.imgEye}
+                />
+
                 {errors.password && touched.password && (
                   <Text style={styles.errorText}>{errors.password}</Text>
                 )}
@@ -86,35 +92,11 @@ const SignIn1 = ({navigation}) => {
           </Formik>
           <Image
             source={require('../images/02/fingerprint.png')}
-            style={{width: 52.31, height: 54, marginTop: 150}}
+            style={styles.imgFinger}
           />
-          <View
-            style={{
-              flexDirection: 'row',
-              marginTop: 15,
-              alignContent: 'center',
-              justifyContent: 'center',
-            }}>
-            <Text
-              style={{
-                fontSize: 18,
-                fontWeight: 'bold',
-                color: '#FFFFFF',
-                height: 24,
-                width: 40,
-              }}>
-              OR
-            </Text>
-            <Text
-              style={{
-                fontSize: 13,
-                lineHeight: 25,
-                color: '#FFFFFF',
-                height: 21,
-                width: 219,
-              }}>
-              USE YOUR FINGERPRINT TO LOGIN
-            </Text>
+          <View style={styles.bottonText}>
+            <Text style={styles.textOR}>OR</Text>
+            <Text style={styles.bottomText}>USE YOUR FINGERPRINT TO LOGIN</Text>
           </View>
         </View>
       </View>
@@ -160,6 +142,28 @@ const styles = StyleSheet.create({
   },
   linearGradient: {
     flex: 1,
+  },
+  imgFinger: {width: 52.31, height: 54, marginTop: 150},
+  bottonText: {
+    flexDirection: 'row',
+    marginTop: 15,
+    alignContent: 'center',
+    justifyContent: 'center',
+  },
+  imgEye: {width: 24, height: 15,left:125,bottom:63},
+  textOR: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#FFFFFF',
+    height: 24,
+    width: 40,
+  },
+  bottomText: {
+    fontSize: 13,
+    lineHeight: 25,
+    color: '#FFFFFF',
+    height: 21,
+    width: 219,
   },
 });
 

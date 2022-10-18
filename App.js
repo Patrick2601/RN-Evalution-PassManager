@@ -10,20 +10,5 @@ const App = () => {
   return <StackNavigation />;
 };
 
-// const styles = StyleSheet.create({
-//   main: {
-//     flex: 1,
-//     justifyContent: 'center',
-//     alignItems: 'center',
-//   },
-//   linearGradient: {
-//     flex: 1,
-//   },
-//   img: {width: 179, height: 68, marginTop: 20},
-//   view: {
-//     flex: 1,
-//     width: '100%',
-//   },
-// });
 
 export default App;
