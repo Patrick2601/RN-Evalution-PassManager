@@ -69,7 +69,7 @@ export default SiteList;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop:20,
+    marginTop:40,
     width:"100%",
   },
   flatList:{

@@ -1,5 +1,5 @@
 /* eslint-disable react/react-in-jsx-scope */
-import {Button} from 'react-native';
+import {Text, Pressable} from 'react-native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {NavigationContainer} from '@react-navigation/native';
 import PassManager from '../screens/PassManager';
@@ -44,11 +44,10 @@ const StackNavigation = () => {
             headerTitleAlign: 'left',
             headerTintColor: 'white',
             headerRight: () => (
-              <Button
+              <Pressable
                 onPress={() => navigation.push('Edit Site')}
-                title="Edit"
-                color="#ffffff"
-              />
+                color="#ffff00"
+              ><Text style={{color:'white' ,fontSize:20}}>Edit</Text></Pressable>
             ),
           })}
         />

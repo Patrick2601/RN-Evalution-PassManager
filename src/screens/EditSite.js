@@ -31,9 +31,10 @@ const EditSite = ({navigation}) => {
             password: '',
             confirmPassword: '',
           }}
-          
-          onSubmit={()=>
-          alert('HH')}>
+          onSubmit={() => {
+            alert('navigate');
+            navigation.navigate('PASS MANAGER');
+          }}>
           {({handleSubmit, isValid}) => (
             <>
               <Text style={styles.text}>URL</Text>
@@ -117,11 +118,10 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   buttons: {
-    alignItems:'center',
-    justifyContent:'center',
-    backgroundColor:'#0E85FF',
-    top:Platform.OS === 'ios' ? 120 : 60,
- 
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#0E85FF',
+    top: Platform.OS === 'ios' ? 120 : 60,
   },
   text: {
     height: 24,
