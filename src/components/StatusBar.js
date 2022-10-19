@@ -1,7 +1,19 @@
-import {View, Text, Image, StyleSheet, Pressable} from 'react-native';
-import React from 'react';
+import {
+  View,
+  Text,
+  Image,
+  StyleSheet,
+  Pressable,
+  TextInput,
+} from 'react-native';
+import React, {useState} from 'react';
+import { useSelector } from 'react-redux';
+import Icons from 'react-native-vector-icons/AntDesign';
 
 const StatusBar = () => {
+  const siteData=useSelector(state => state.site.value)
+  const [search, setSearch] = useState(false);
+
   return (
     <View style={styles.main}>
       <View style={styles.bodytop}>
@@ -13,10 +25,13 @@ const StatusBar = () => {
           source={require('../images/06/Group/passmanager.png')}
           style={styles.image2}
         />
-        <Image
-          source={require('../images/06/Group/search.png')}
-          style={styles.image3}
-        />
+        <Pressable onPress={() => setSearch(!search)}>
+          <Image
+            source={require('../images/06/Group/search.png')}
+            style={styles.image3}
+          />
+        </Pressable>
+
         <Image
           source={require('../images/06/Group/sync_icn.png')}
           style={styles.image4}
@@ -26,37 +41,45 @@ const StatusBar = () => {
           style={styles.image5}
         />
       </View>
-      <View style={styles.container2}>
-        <View style={styles.bodytop2}>
-          <Text style={styles.text1}>Sites</Text>
-          <Text style={styles.text2}>Social Media</Text>
-          <View style={styles.oval}>
-            <Text style={styles.number}>07</Text>
-          </View>
-          <Pressable>
-            <Image
-              source={require('../images/06/heading/PathCopy.png')}
-              style={styles.image6}
-            />
-          </Pressable>
+      {search ? (
+        <View style={styles.searchBar}>
+          <TextInput placeholder="Type keywords to search"></TextInput>
+          <Icons name="arrowright" size={20} color="#0E85FF" />
         </View>
-        <View style={styles.bottomborder}/>
-      </View>
+      ) : (
+        <View style={styles.container2}>
+          <View style={styles.bodytop2}>
+            <Text style={styles.text1}>Sites</Text>
+            <Text style={styles.text2}>Social Media</Text>
+            <View style={styles.oval}>
+              <Text style={styles.number}>{siteData.length}</Text>
+            </View>
+            <Pressable>
+              <Image
+                source={require('../images/06/heading/PathCopy.png')}
+                style={styles.image6}
+              />
+            </Pressable>
+          </View>
+          <View style={styles.bottomborder} />
+        </View>
+      )}
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-
   bodytop: {
-    width:400,
+    width: 400,
     height: 55,
     flexDirection: 'row',
     backgroundColor: '#0E85FF',
   },
   container2: {
-    marginTop: 20,
-    marginHorizontal: 30,
+    paddingTop: 5,
+    paddingHorizontal: 24,
+    height: 60,
+    backgroundColor: '#FAFAFA',
   },
   bodytop2: {
     flexDirection: 'row',
@@ -69,7 +92,7 @@ const styles = StyleSheet.create({
     width: 30,
     borderBottomColor: '#FFA136',
     borderRadius: 1.6,
-    marginTop:-10
+    marginTop: -10,
   },
   image1: {
     marginTop: 20,
@@ -113,7 +136,8 @@ const styles = StyleSheet.create({
     width: 19,
     color: '#FFFFFF',
     fontSize: 16,
-    marginLeft: 0,
+    marginLeft: 9,
+    marginTop:2
   },
   oval: {
     alignItems: 'center',
@@ -124,6 +148,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     marginLeft: 8,
   },
+
   touchableOpacity: {
     position: 'absolute',
     width: 50,
@@ -137,6 +162,15 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',
     width: 48,
     height: 48,
+  },
+  searchBar: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    height: 55,
+    width: 390,
+    borderRadius: 4,
+    justifyContent: 'space-between',
+    paddingHorizontal: 20,
   },
 });
 

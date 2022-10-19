@@ -1,65 +1,25 @@
 import React from 'react';
-import {
-  View,
-  FlatList,
-  StyleSheet,
-  Text,
-  Image,
-  Pressable,
-  TouchableHighlight,
-} from 'react-native';
-const DATA = [
-  {
-    key: 'Facebook',
-    source: require('../images/06/01/Bitmap.png'),
-    link: 'www.facebook.com',
-  },
-  {
-    key: 'YouTube',
-    source: require('../images/06/01copy3/Bitmap.png'),
-    link: 'www.youtube.com/ssmraok',
-  },
-  {
-    key: 'Twitter',
-    source: require('../images/06/01copy4/BitmapCopy2.png'),
-    link: 'www.twitter.com',
-  },
-  {
-    key: 'Instagram',
-    source: require('../images/06/01copy/Bitmap.png'),
-    link: 'www.instagram.com',
-  },
-];
+import {View, FlatList, StyleSheet} from 'react-native';
+import {useSelector} from 'react-redux';
+import {MainComp} from './MainComp';
 
 const SiteList = ({navigation}) => {
+  const siteData = useSelector(state => state.site.value);
+  const renderItem = ({item}) => (
+    <MainComp
+      title={item.siteName}
+      uri={item.icon}
+      url={item.url}
+      onPress={() => navigation.navigate('Edit Site', {item})}
+    />
+  );
+
   return (
     <View style={styles.container}>
       <FlatList
-        data={DATA}
-        renderItem={({item}) => (
-          <TouchableHighlight
-            style={styles.itemContainer}
-            onPress={() => {
-              navigation.navigate('Edit Site')
-            }}>
-            <View >
-              <View style={styles.topItem}>
-                <Image source={item.source}></Image>
-
-                <View>
-                  <Text style={styles.socialText}>{item.key}</Text>
-                  <View>
-                    <Text style={styles.copyText}>Copy Password</Text>
-                  </View>
-                </View>
-              </View>
-
-              <View style={styles.bottomItem}>
-                <Text style={styles.link}>{item.link}</Text>
-              </View>
-            </View>
-          </TouchableHighlight>
-        )}
+        data={siteData}
+        keyExtractor={item => item.id}
+        renderItem={renderItem}
       />
     </View>
   );
@@ -69,11 +29,12 @@ export default SiteList;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop:40,
-    width:"100%",
+    paddingTop: 30,
+    width: '100%',
+    backgroundColor: '#FAFAFA',
   },
-  flatList:{
-    marginTop:20
+  flatList: {
+    marginTop: 20,
   },
   item: {
     padding: 10,
@@ -85,7 +46,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
     marginHorizontal: 20,
     borderRadius: 10,
-   shadowOffset: {width: -2, height: 1},
+    shadowOffset: {width: -2, height: 1},
     shadowColor: '#E7E7E7',
     shadowOpacity: 0.9,
     shadowRadius: 3,

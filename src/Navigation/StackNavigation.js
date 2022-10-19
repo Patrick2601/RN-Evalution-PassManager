@@ -5,7 +5,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import PassManager from '../screens/PassManager';
 import AuthScreen from '../screens/AuthScreen';
 import AddSite from '../screens/AddSite';
-import EditSite from '../screens/EditSite';
+import EditSite from '../screens/SiteDetails';
 
 const Stack = createNativeStackNavigator();
 const StackNavigation = () => {
@@ -18,7 +18,7 @@ const StackNavigation = () => {
         <Stack.Screen
           name="PASS MANAGER"
           component={PassManager}
-          options={{headerShown: true}}
+          options={{headerShown: false}}
         />
         <Stack.Screen
           name="Add Site"

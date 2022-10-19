@@ -1,36 +1,17 @@
 import {View, Text, SafeAreaView, StyleSheet} from 'react-native';
-import React from 'react';
+import React, {useState} from 'react';
 import {Formik, Field} from 'formik';
-import * as yup from 'yup';
-import {Button3} from '../components/Buttons';
 import CustomInput from '../components/CustomInput';
+import {useRoute} from '@react-navigation/native';
 
-const EditSite = ({navigation}) => {
-  const signUpValidationSchema = yup.object().shape({
-    mobile: yup
-      .string()
-      .matches(/(\d){10}\b/, 'Enter a valid Mobile Number')
-      .required('Mobile Number is required'),
-    password: yup
-      .string()
-      .min(4, ({min}) => `Pin must be at least ${min} characters`)
-      .max(4, ({max}) => `Pin must be at least ${max} characters`)
-      .required('Pin is required'),
-    confirmPassword: yup
-      .string()
-      .oneOf([yup.ref('password')], 'Pin do not match')
-      .required('Confirm Pin is required'),
-  });
+const SiteDetails = ({navigation}) => {
+  const route = useRoute();
+  const [edit,setEdit]=useState(false)
+  const [siteDetails, setSiteDetails] = useState(route.params.item);
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.signupContainer}>
         <Formik
-          // validationSchema={signUpValidationSchema}
-          initialValues={{
-            mobile: '',
-            password: '',
-            confirmPassword: '',
-          }}
           onSubmit={() => {
             alert('navigate');
             navigation.navigate('PASS MANAGER');
@@ -40,53 +21,55 @@ const EditSite = ({navigation}) => {
               <Text style={styles.text}>URL</Text>
               <Field
                 component={CustomInput}
-                name="URL"
-                placeholderTextColor="grey"
+                value={siteDetails.url}
                 style={styles.field}
+                editable={edit}
               />
               <Text style={styles.text}>Site Name</Text>
 
               <Field
                 component={CustomInput}
-                name="Site Name"
-                placeholderTextColor="grey"
+                value={siteDetails.siteName}
                 style={styles.field}
+                editable={edit}
+
               />
               <Text style={styles.text}>Sector/Folder</Text>
 
               <Field
                 component={CustomInput}
-                name="Sector"
-                placeholderTextColor="grey"
+                value={siteDetails.folder}
                 style={styles.field}
+                editable={edit}
+
               />
               <Text style={styles.text}>User Name</Text>
 
               <Field
                 component={CustomInput}
-                name="User Name"
-                placeholderTextColor="grey"
+                value={siteDetails.userName}
                 style={styles.field}
+                editable={edit}
+
               />
               <Text style={styles.text}>Site Password</Text>
 
               <Field
                 component={CustomInput}
-                name="Site Password"
-                placeholderTextColor="grey"
+                value={siteDetails.sitePassword}
                 style={styles.field}
+                editable={edit}
+
               />
               <Text style={styles.text}>Notes</Text>
 
               <Field
                 component={CustomInput}
-                name="Notes"
-                placeholderTextColor="grey"
+                value={siteDetails.notes}
                 style={styles.field}
+                editable={edit}
+
               />
-              <View style={styles.buttons}>
-                <Button3 onPress={handleSubmit} name="UPDATE" />
-              </View>
             </>
           )}
         </Formik>
@@ -117,12 +100,6 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     marginBottom: 20,
   },
-  buttons: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#0E85FF',
-    top: Platform.OS === 'ios' ? 120 : 60,
-  },
   text: {
     height: 24,
     width: 320,
@@ -132,4 +109,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default EditSite;
+export default SiteDetails;

@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
   linearGradient: {
     flex: 1,
   },
-  img: {width: 179, height: 68, marginTop: 15},
+  img: {width: 179, height: 68, marginTop: 20},
   view: {
     flex: 1,
     width: '100%',

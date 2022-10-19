@@ -1,12 +1,9 @@
-/* eslint-disable react-native/no-inline-styles */
-/* eslint-disable no-alert */
-// SignUp.js
+
 import React from 'react';
 import {SafeAreaView, StyleSheet, View} from 'react-native';
 import {Formik, Field} from 'formik';
 import * as yup from 'yup';
 import CustomInput from '../components/CustomInput';
-import {signUp} from '../services/Auth';
 import {Buttons} from '../components/Buttons';
 import LinearGradient from 'react-native-linear-gradient';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -17,14 +14,14 @@ const SignUp = ({navigation}) => {
       .string()
       .matches(/(\d){10}\b/, 'Enter a valid Mobile Number')
       .required('Mobile Number is required'),
-    password: yup
+    pin: yup
       .string()
       .min(4, ({min}) => `Pin must be at least ${min} characters`)
       .max(4, ({max}) => `Pin must be at least ${max} characters`)
       .required('Pin is required'),
-    confirmPassword: yup
+    confirmpin: yup
       .string()
-      .oneOf([yup.ref('password')], 'Pin do not match')
+      .oneOf([yup.ref('pin')], 'Pin do not match')
       .required('Confirm Pin is required'),
   });
   return (
@@ -35,14 +32,25 @@ const SignUp = ({navigation}) => {
         <SafeAreaView style={styles.container}>
           <View style={styles.signupContainer}>
             <Formik
-              // validationSchema={signUpValidationSchema}
+               validationSchema={signUpValidationSchema}
               initialValues={{
                 mobile: '',
-                password: '',
-                confirmPassword: '',
+                pin: '',
+                confirmpin: '',
               }}
-              onSubmit={() => navigation.navigate('SIGN IN')}>
-              {({handleSubmit, isValid}) => (
+              onSubmit={async (values,{resetForm}) => {
+                try {
+                  
+                  const jsonValue = JSON.stringify(values);
+                  console.log(jsonValue);
+                  await AsyncStorage.setItem(values.mobile, jsonValue);
+                   resetForm({values:''})
+                  navigation.navigate('SIGN IN');
+                } catch (err) {
+                  console.log(err);
+                }
+              }}>
+              {({handleSubmit, values, isValid}) => (
                 <>
                   <Field
                     component={CustomInput}
@@ -50,22 +58,25 @@ const SignUp = ({navigation}) => {
                     placeholder=" Enter Mobile Number"
                     placeholderTextColor="grey"
                     style={styles.field}
+                    value={values.mobile}
                   />
                   <Field
                     component={CustomInput}
-                    name="password"
+                    name="pin"
                     placeholder="  Enter 4 digit Mpin"
                     placeholderTextColor="grey"
                     secureTextEntry
                     style={styles.field}
+                    value={values.pin}
                   />
                   <Field
                     component={CustomInput}
-                    name="confirmPassword"
+                    name="confirmpin"
                     placeholder="  Re-Enter 4 digit Mpin"
                     placeholderTextColor="grey"
                     secureTextEntry
                     style={styles.field}
+                    value={values.confirmpin}
                   />
                   <View style={styles.button}>
                     <Buttons onPress={handleSubmit} name="SIGN IN" />

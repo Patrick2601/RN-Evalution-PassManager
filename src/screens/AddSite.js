@@ -1,93 +1,137 @@
 import {View, Text, SafeAreaView, StyleSheet} from 'react-native';
-import React from 'react';
+import React, {useState} from 'react';
 import {Formik, Field} from 'formik';
 import * as yup from 'yup';
+import {addSite} from '../Redux/Reducers/Slice';
+import Facebook from '../images/06/01/Bitmap.png';
 import {Button1} from '../components/Buttons';
 import CustomInput from '../components/CustomInput';
+import {useSelector, useDispatch} from 'react-redux';
 
 const AddSite = ({navigation}) => {
+  const siteData = useSelector(state => state.site.value);
+  const dispatch = useDispatch();
   const signUpValidationSchema = yup.object().shape({
-    mobile: yup
+    url: yup
       .string()
-      .matches(/(\d){10}\b/, 'Enter a valid Mobile Number')
-      .required('Mobile Number is required'),
-    password: yup
-      .string()
-      .min(4, ({min}) => `Pin must be at least ${min} characters`)
-      .max(4, ({max}) => `Pin must be at least ${max} characters`)
-      .required('Pin is required'),
-    confirmPassword: yup
-      .string()
-      .oneOf([yup.ref('password')], 'Pin do not match')
-      .required('Confirm Pin is required'),
+      .required('URL is required'),
+    // siteName: yup
+    //   .string()
+    //   .required('Site Name is required'),
+    //   folder: yup
+    //   .string()
+    //   .required('URL is required'),
+    // userName: yup
+    //   .string()
+    //   .required('Site Name is required'),
+    //   sitePassword: yup
+    //   .string()
+    //   .required('URL is required'),
+      
+    
   });
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.signupContainer}>
         <Formik
-          // validationSchema={signUpValidationSchema}
+          validationSchema={signUpValidationSchema}
           initialValues={{
-            mobile: '',
-            password: '',
-            confirmPassword: '',
+            id: siteData.length + 1,
+            url: '',
+            siteName: '',
+            folder: '',
+            userName: '',
+            sitePassword: '',
+            notes: '',
+            icon: Facebook,
           }}
-          onSubmit={() => {
-            alert('Saved Successfully')
-            navigation.navigate('PASS MANAGER')
-       
+          onSubmit={values => {
+            alert('Saved Successfully');
+            dispatch(addSite(values));
+            navigation.navigate('PASS MANAGER');
           }}>
-          {({handleSubmit, isValid}) => (
+          {({
+            handleChange,
+            handleBlur,
+            handleSubmit,
+            values,
+            errors,
+            isValid,
+          }) => (
             <>
               <Text style={styles.text}>URL</Text>
               <Field
                 component={CustomInput}
-                name="URL"
+                name="url"
                 placeholderTextColor="grey"
                 style={styles.field}
+                onChangeText={handleChange('url')}
+                onBlur={handleBlur('url')}
+                value={values.url}
               />
               <Text style={styles.text}>Site Name</Text>
 
               <Field
                 component={CustomInput}
-                name="Site Name"
+                name="siteName"
                 placeholderTextColor="grey"
                 style={styles.field}
+                onChangeText={handleChange('siteName')}
+                onBlur={handleBlur('siteName')}
+                value={values.siteName}
               />
               <Text style={styles.text}>Sector/Folder</Text>
 
               <Field
                 component={CustomInput}
-                name="Sector"
+                name="folder"
                 placeholderTextColor="grey"
                 style={styles.field}
+                onChangeText={handleChange('folder')}
+                onBlur={handleBlur('folder')}
+                value={values.folder}
               />
               <Text style={styles.text}>User Name</Text>
 
               <Field
                 component={CustomInput}
-                name="User Name"
+                name="userName"
                 placeholderTextColor="grey"
                 style={styles.field}
+                onChangeText={handleChange('userName')}
+                onBlur={handleBlur('userName')}
+                value={values.userName}
               />
               <Text style={styles.text}>Site Password</Text>
 
               <Field
                 component={CustomInput}
-                name="Site Password"
+                name="sitePassword"
                 placeholderTextColor="grey"
                 style={styles.field}
+                onChangeText={handleChange('sitePassword')}
+                onBlur={handleBlur('sitePassword')}
+                value={values.sitePassword}
               />
               <Text style={styles.text}>Notes</Text>
 
               <Field
                 component={CustomInput}
-                name="Notes"
+                name="notes"
                 placeholderTextColor="grey"
                 style={styles.field}
+                onChangeText={handleChange('notes')}
+                onBlur={handleBlur('notes')}
+                value={values.notes}
               />
               <View style={styles.buttons}>
-                <Button1 onPress={handleSubmit} name="RESET" />
-                <Button1 onPress={handleSubmit} name="SAVE" />
+                <Button1 name="RESET" />
+                <Button1
+                  onPress={handleSubmit}
+                  disabled={!isValid}
+                  name="SAVE"
+                />
               </View>
             </>
           )}

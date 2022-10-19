@@ -1,38 +1,23 @@
-/* eslint-disable no-alert */
-/* eslint-disable react-native/no-inline-styles */
-import {View, Text, StyleSheet, TextInput, Image} from 'react-native';
-import React, {useState} from 'react';
+
+import {View, Text, StyleSheet, TextInput, Image, Alert} from 'react-native';
+import React from 'react';
 import {Formik} from 'formik';
 import * as yup from 'yup';
 import {Buttons} from '../components/Buttons';
 import LinearGradient from 'react-native-linear-gradient';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const SignIn1 = ({navigation}) => {
-  const [number, setNumber] = useState();
-  const [pin, setPin] = useState();
-
-  const onSubmit = () => {
-    setNumber(number);
-    setPin(pin);
-    console.log(number);
-    console.log(pin);
-    navigation.navigate('PASS MANAGER');
-    // if (number === '1234567890' && pin === '0000') {
-    // } else {
-    //   console.log('Failed....');
-    // }
-  };
-
   const loginValidationSchema = yup.object().shape({
     mobile: yup
       .string()
       .matches(/(\d){10}\b/, 'Enter a valid Mobile Number')
-      .max(10, ({max}) => `Password must be at least ${max} characters`)
       .required('Mobile Number is Required'),
-    password: yup
+    pin: yup
       .string()
-      .max(4, ({max}) => `Password must be at least ${max} characters`)
-      .required('Password is required'),
+      .min(4, ({min}) => `Mpin must be at least ${min} characters`)
+      .max(4, ({max}) => `Mpin must be at least ${max} characters`)
+      .required('Mpin is required'),
   });
   return (
     <LinearGradient
@@ -41,10 +26,28 @@ const SignIn1 = ({navigation}) => {
       <View style={styles.main}>
         <View style={styles.loginContainer}>
           <Formik
-            // validationSchema={loginValidationSchema}
-            initialValues={{mobile: '', password: ''}}
-            // onSubmit={alert('kkk')}
-          >
+            validationSchema={loginValidationSchema}
+            initialValues={{mobile: '', pin: ''}}
+            onSubmit={async values => {
+              try {
+                const jsonValue = await AsyncStorage.getItem(values.mobile);
+                if (jsonValue != null) {
+                  parseValue = JSON.parse(jsonValue);
+                  console.log(parseValue);
+                  if (
+                    values.mobile === parseValue.mobile &&
+                    values.pin === parseValue.pin
+                  ) {
+                    console.log('LOGIN SUCCESS');
+                    navigation.navigate('PASS MANAGER');
+                  } else {
+                    alert('Wrong Mobile Number or Mpin');
+                  }
+                }
+              } catch (err) {
+                console.log(err);
+              }
+            }}>
             {({
               handleChange,
               handleBlur,
@@ -60,32 +63,34 @@ const SignIn1 = ({navigation}) => {
                   placeholder="   Mobile Number"
                   placeholderTextColor="grey"
                   style={styles.textInput}
-                  onChangeText={num => setNumber(num)}
+                  onChangeText={handleChange('mobile')}
                   onBlur={handleBlur('mobile')}
+                  value={values.mobile}
                 />
                 {errors.mobile && touched.mobile && (
                   <Text style={styles.errorText}>{errors.mobile}</Text>
                 )}
                 <TextInput
-                  name="password"
+                  name="pin"
                   placeholder="   Mpin"
                   placeholderTextColor="grey"
                   style={styles.textInput}
-                  onChangeText={pass => setPin(pass)}
-                  onBlur={handleBlur('password')}
+                  onChangeText={handleChange('pin')}
+                  onBlur={handleBlur('pin')}
                   secureTextEntry
+                  value={values.pin}
                 />
                 <Image
                   source={require('../images/02/Group/Password/eye/eyeon.png')}
                   style={styles.imgEye}
                 />
 
-                {errors.password && touched.password && (
-                  <Text style={styles.errorText}>{errors.password}</Text>
+                {errors.pin && touched.pin && (
+                  <Text style={styles.errorText}>{errors.pin}</Text>
                 )}
                 <Text style={styles.forgotText}>Forgot your password?</Text>
                 <View style={styles.button}>
-                  <Buttons onPress={onSubmit} name="SIGN IN" />
+                  <Buttons onPress={handleSubmit} name="SIGN IN" />
                 </View>
               </>
             )}
@@ -150,7 +155,7 @@ const styles = StyleSheet.create({
     alignContent: 'center',
     justifyContent: 'center',
   },
-  imgEye: {width: 24, height: 15,left:125,bottom:63},
+  imgEye: {width: 24, height: 15, left: 125, bottom: 63},
   textOR: {
     fontSize: 18,
     fontWeight: 'bold',
