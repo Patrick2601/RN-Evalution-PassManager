@@ -1,7 +1,7 @@
 import {createSlice} from '@reduxjs/toolkit';
 import Facebook from '../../images/06/01/Bitmap.png';
-import Twitter from '../../images/06/01copy4/BitmapCopy2.png';
 import Youtube from '../../images/06/01copy3/Bitmap.png';
+import Twitter from '../../images/06/01copy4/BitmapCopy2.png';
 import Instagram from '../../images/06/01copy/Bitmap.png';
 const Image_Icon = [Facebook, Youtube, Twitter, Instagram];
 
