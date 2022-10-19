@@ -7,11 +7,11 @@ import {
   TextInput,
 } from 'react-native';
 import React, {useState} from 'react';
-import { useSelector } from 'react-redux';
+import {useSelector} from 'react-redux';
 import Icons from 'react-native-vector-icons/AntDesign';
 
 const StatusBar = () => {
-  const siteData=useSelector(state => state.site.value)
+  const siteData = useSelector(state => state.site.value);
   const [search, setSearch] = useState(false);
 
   return (
@@ -137,7 +137,7 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
     fontSize: 16,
     marginLeft: 9,
-    marginTop:2
+    marginTop: 2,
   },
   oval: {
     alignItems: 'center',

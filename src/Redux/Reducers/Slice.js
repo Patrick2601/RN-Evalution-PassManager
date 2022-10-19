@@ -1,7 +1,7 @@
 import {createSlice} from '@reduxjs/toolkit';
 import Facebook from '../../images/06/01/Bitmap.png';
-import Youtube from '../../images/06/01copy3/Bitmap.png';
 import Twitter from '../../images/06/01copy4/BitmapCopy2.png';
+import Youtube from '../../images/06/01copy3/Bitmap.png';
 import Instagram from '../../images/06/01copy/Bitmap.png';
 const Image_Icon = [Facebook, Youtube, Twitter, Instagram];
 
@@ -57,21 +57,9 @@ export const Slice = createSlice({
     addSite: (state, action) => {
       state.value.push(action.payload);
     },
-    editSite: (state, action) => {
-      state.value.map(site => {
-        if (site.id === action.payload.id) {
-          site.url = action.payload.url;
-          site.siteName = action.payload.siteName;
-          site.folder = action.payload.folder;
-          site.userName = action.payload.userName;
-          site.sitePassword = action.payload.sitePassword;
-          site.notes = action.payload.notes;
-        }
-      });
-    },
   },
 });
 
-export const {addSite, editSite} = Slice.actions;
+export const {addSite} = Slice.actions;
 
 export default Slice.reducer;

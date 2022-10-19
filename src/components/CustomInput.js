@@ -3,7 +3,7 @@ import {Text, TextInput, StyleSheet} from 'react-native';
 
 const CustomInput = props => {
   const {
-    field: {editable,name, onBlur, onChange, value},
+    field: {editable, name, onBlur, onChange, value},
     form: {errors, touched, setFieldTouched},
     ...inputProps
   } = props;

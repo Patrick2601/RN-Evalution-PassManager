@@ -35,7 +35,7 @@ const StackNavigation = () => {
         <Stack.Screen
           name="Edit Site"
           component={EditSite}
-          options={({navigation}) =>({
+          options={({navigation}) => ({
             headerShown: true,
             headerBackTitleVisible: false,
             headerTitle: 'Site Details',
@@ -46,8 +46,9 @@ const StackNavigation = () => {
             headerRight: () => (
               <Pressable
                 onPress={() => navigation.push('Edit Site')}
-                color="#ffff00"
-              ><Text style={{color:'white' ,fontSize:20}}>Edit</Text></Pressable>
+                color="#ffff00">
+                <Text style={{color: 'white', fontSize: 20}}>Edit</Text>
+              </Pressable>
             ),
           })}
         />

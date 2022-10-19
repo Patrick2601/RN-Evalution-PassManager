@@ -19,9 +19,7 @@ export const MainComp = ({
           </View>
         </View>
         <View style={styles.view}>
-          <Pressable>
-            <Text style={styles.text3}>{url}</Text>
-          </Pressable>
+          <Text style={styles.text3}>{url}</Text>
         </View>
       </Pressable>
     </View>
@@ -34,7 +32,7 @@ const styles = StyleSheet.create({
     width: 345,
     borderRadius: 12.6,
     marginTop: 10,
-    marginLeft:22,
+    marginLeft: 22,
     borderRight: 5,
     backgroundColor: '#FFFFFF',
     shadowOpacity: 0.5,
