@@ -6,6 +6,7 @@ import PassManager from '../screens/PassManager';
 import AuthScreen from '../screens/AuthScreen';
 import AddSite from '../screens/AddSite';
 import EditSite from '../screens/SiteDetails';
+import SiteDetails from '../screens/SiteDetails';
 
 const Stack = createNativeStackNavigator();
 const StackNavigation = () => {

@@ -6,7 +6,7 @@ import {useRoute} from '@react-navigation/native';
 
 const SiteDetails = ({navigation}) => {
   const route = useRoute();
-  const [edit,setEdit]=useState(false)
+  const [edit, setEdit] = useState(false);
   const [siteDetails, setSiteDetails] = useState(route.params.item);
   return (
     <SafeAreaView style={styles.container}>
@@ -32,7 +32,6 @@ const SiteDetails = ({navigation}) => {
                 value={siteDetails.siteName}
                 style={styles.field}
                 editable={edit}
-
               />
               <Text style={styles.text}>Sector/Folder</Text>
 
@@ -41,7 +40,6 @@ const SiteDetails = ({navigation}) => {
                 value={siteDetails.folder}
                 style={styles.field}
                 editable={edit}
-
               />
               <Text style={styles.text}>User Name</Text>
 
@@ -50,7 +48,6 @@ const SiteDetails = ({navigation}) => {
                 value={siteDetails.userName}
                 style={styles.field}
                 editable={edit}
-
               />
               <Text style={styles.text}>Site Password</Text>
 
@@ -59,7 +56,6 @@ const SiteDetails = ({navigation}) => {
                 value={siteDetails.sitePassword}
                 style={styles.field}
                 editable={edit}
-
               />
               <Text style={styles.text}>Notes</Text>
 
@@ -68,7 +64,6 @@ const SiteDetails = ({navigation}) => {
                 value={siteDetails.notes}
                 style={styles.field}
                 editable={edit}
-
               />
             </>
           )}

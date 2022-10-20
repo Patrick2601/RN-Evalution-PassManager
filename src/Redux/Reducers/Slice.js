@@ -52,14 +52,22 @@ export const Slice = createSlice({
   name: 'site',
   initialState: {
     value: initialState,
+    preState: initialState 
   },
   reducers: {
     addSite: (state, action) => {
       state.value.push(action.payload);
+      state.preState.push(action.payload);
+
+    },
+    filter: (state, action) => {
+      state.value = state.preState.filter(item =>
+        item.siteName.toLowerCase().includes(action.payload.toLowerCase()),
+      );
     },
   },
 });
 
-export const {addSite} = Slice.actions;
+export const {addSite,filter} = Slice.actions;
 
 export default Slice.reducer;

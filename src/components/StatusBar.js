@@ -7,11 +7,13 @@ import {
   TextInput,
 } from 'react-native';
 import React, {useState} from 'react';
-import {useSelector} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
 import Icons from 'react-native-vector-icons/AntDesign';
+import {filter} from '../Redux/Reducers/Slice';
 
 const StatusBar = () => {
   const siteData = useSelector(state => state.site.value);
+  const dispatch = useDispatch();
   const [search, setSearch] = useState(false);
 
   return (
@@ -43,7 +45,9 @@ const StatusBar = () => {
       </View>
       {search ? (
         <View style={styles.searchBar}>
-          <TextInput placeholder="Type keywords to search"></TextInput>
+          <TextInput
+            placeholder="Type keywords to search"
+            onChangeText={text => dispatch(filter(text))}></TextInput>
           <Icons name="arrowright" size={20} color="#0E85FF" />
         </View>
       ) : (
