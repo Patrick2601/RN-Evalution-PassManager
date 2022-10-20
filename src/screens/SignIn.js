@@ -1,11 +1,19 @@
-
-import {View, Text, StyleSheet, TextInput, Image, Alert} from 'react-native';
-import React from 'react';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TextInput,
+  Image,
+  Alert,
+  Pressable,
+} from 'react-native';
+import React, {useState} from 'react';
 import {Formik} from 'formik';
 import * as yup from 'yup';
 import {Buttons} from '../components/Buttons';
 import LinearGradient from 'react-native-linear-gradient';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Icon from 'react-native-vector-icons/Feather';
 
 const SignIn1 = ({navigation}) => {
   const loginValidationSchema = yup.object().shape({
@@ -19,6 +27,8 @@ const SignIn1 = ({navigation}) => {
       .max(4, ({max}) => `Mpin must be at least ${max} characters`)
       .required('Mpin is required'),
   });
+  const [icon, setIcon] = useState('eye');
+  const [secureTextEntry, setSecureTextEntry] = useState(true);
   return (
     <LinearGradient
       colors={['#20BBFF', '#0E85FF']}
@@ -77,13 +87,20 @@ const SignIn1 = ({navigation}) => {
                   style={styles.textInput}
                   onChangeText={handleChange('pin')}
                   onBlur={handleBlur('pin')}
-                  secureTextEntry
+                  secureTextEntry={secureTextEntry}
                   value={values.pin}
                 />
-                <Image
-                  source={require('../images/02/Group/Password/eye/eyeon.png')}
-                  style={styles.imgEye}
-                />
+                <View style={{left: 120, bottom: 68}}>
+                  <Icon
+                    name={icon}
+                    size={25}
+                    color="grey"
+                    onPress={() => {
+                      setSecureTextEntry(!secureTextEntry);
+                      secureTextEntry ? setIcon('eye-off') : setIcon('eye');
+                    }}
+                  />
+                </View>
 
                 {errors.pin && touched.pin && (
                   <Text style={styles.errorText}>{errors.pin}</Text>

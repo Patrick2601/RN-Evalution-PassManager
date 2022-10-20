@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React ,{useState}from 'react';
 import {SafeAreaView, StyleSheet, View} from 'react-native';
 import {Formik, Field} from 'formik';
 import * as yup from 'yup';
@@ -7,6 +7,7 @@ import CustomInput from '../components/CustomInput';
 import {Buttons} from '../components/Buttons';
 import LinearGradient from 'react-native-linear-gradient';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import  Icon  from 'react-native-vector-icons/Feather';
 
 const SignUp = ({navigation}) => {
   const signUpValidationSchema = yup.object().shape({
@@ -24,6 +25,8 @@ const SignUp = ({navigation}) => {
       .oneOf([yup.ref('pin')], 'Pin do not match')
       .required('Confirm Pin is required'),
   });
+  const [icon, setIcon] = useState('eye');
+  const [secureTextEntry, setSecureTextEntry] = useState(true);
   return (
     <>
       <LinearGradient
@@ -65,7 +68,7 @@ const SignUp = ({navigation}) => {
                     name="pin"
                     placeholder="  Enter 4 digit Mpin"
                     placeholderTextColor="grey"
-                    secureTextEntry
+                    secureTextEntry={secureTextEntry}
                     style={styles.field}
                     value={values.pin}
                   />
@@ -74,10 +77,20 @@ const SignUp = ({navigation}) => {
                     name="confirmpin"
                     placeholder="  Re-Enter 4 digit Mpin"
                     placeholderTextColor="grey"
-                    secureTextEntry
+                    secureTextEntry={secureTextEntry}
                     style={styles.field}
                     value={values.confirmpin}
                   />
+                  <View style={{left: 120, bottom: 68}}>
+                  <Icon name={icon}
+                    size={25}
+                    color="grey"
+                    onPress={() => {
+                      setSecureTextEntry(!secureTextEntry);
+                      secureTextEntry ? setIcon('eye-off') : setIcon('eye');
+                    }}/>
+               
+                </View>
                   <View style={styles.button}>
                     <Buttons onPress={handleSubmit} name="SIGN IN" />
                   </View>
@@ -98,7 +111,7 @@ const styles = StyleSheet.create({
     height: 54,
     width: 300,
     backgroundColor: '#FFFFFF',
-    borderColor: 'gray',
+    borderColor: 'grey',
     borderWidth: StyleSheet.hairlineWidth,
     borderRadius: 4,
     marginBottom: 30,
