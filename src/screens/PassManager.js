@@ -8,7 +8,7 @@ const PassManager = ({navigation}) => {
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar />
-      <SiteList navigation={navigation}/>
+      <SiteList navigation={navigation} />
       <Button2 onPress={() => navigation.navigate('Add Site')} />
     </SafeAreaView>
   );

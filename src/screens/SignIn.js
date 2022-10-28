@@ -4,8 +4,8 @@ import {
   StyleSheet,
   TextInput,
   Image,
-  Alert,
-  Pressable,
+  Platform,
+  ScrollView,
 } from 'react-native';
 import React, {useState} from 'react';
 import {Formik} from 'formik';
@@ -14,8 +14,13 @@ import {Buttons} from '../components/Buttons';
 import LinearGradient from 'react-native-linear-gradient';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Icon from 'react-native-vector-icons/Feather';
-
+import {useDispatch} from 'react-redux';
+import {useSelector} from 'react-redux';
+import {changeUserState} from '../Redux/Reducers/userSlice';
 const SignIn1 = ({navigation}) => {
+  const dispatch = useDispatch();
+  const state = useSelector(state => state.user.userState);
+
   const loginValidationSchema = yup.object().shape({
     mobile: yup
       .string()
@@ -33,95 +38,101 @@ const SignIn1 = ({navigation}) => {
     <LinearGradient
       colors={['#20BBFF', '#0E85FF']}
       style={styles.linearGradient}>
-      <View style={styles.main}>
-        <View style={styles.loginContainer}>
-          <Formik
-            validationSchema={loginValidationSchema}
-            initialValues={{mobile: '', pin: ''}}
-            onSubmit={async values => {
-              try {
-                const jsonValue = await AsyncStorage.getItem(values.mobile);
-                if (jsonValue != null) {
-                  parseValue = JSON.parse(jsonValue);
-                  console.log(parseValue);
-                  if (
-                    values.mobile === parseValue.mobile &&
-                    values.pin === parseValue.pin
-                  ) {
-                    console.log('LOGIN SUCCESS');
-                    navigation.navigate('PASS MANAGER');
-                  } else {
-                    alert('Wrong Mobile Number or Mpin');
-                  }
-                }
-              } catch (err) {
-                console.log(err);
-              }
-            }}>
-            {({
-              handleChange,
-              handleBlur,
-              handleSubmit,
-              values,
-              errors,
-              touched,
-              isValid,
-            }) => (
-              <>
-                <TextInput
-                  name="mobile"
-                  placeholder="   Mobile Number"
-                  placeholderTextColor="grey"
-                  style={styles.textInput}
-                  onChangeText={handleChange('mobile')}
-                  onBlur={handleBlur('mobile')}
-                  value={values.mobile}
-                />
-                {errors.mobile && touched.mobile && (
-                  <Text style={styles.errorText}>{errors.mobile}</Text>
-                )}
-                <TextInput
-                  name="pin"
-                  placeholder="   Mpin"
-                  placeholderTextColor="grey"
-                  style={styles.textInput}
-                  onChangeText={handleChange('pin')}
-                  onBlur={handleBlur('pin')}
-                  secureTextEntry={secureTextEntry}
-                  value={values.pin}
-                />
-                <View style={{left: 120, bottom: 68}}>
-                  <Icon
-                    name={icon}
-                    size={25}
-                    color="grey"
-                    onPress={() => {
-                      setSecureTextEntry(!secureTextEntry);
-                      secureTextEntry ? setIcon('eye-off') : setIcon('eye');
-                    }}
-                  />
-                </View>
+      <ScrollView>
+        <View style={styles.main}>
+          <View style={styles.loginContainer}>
+            <Formik
+              validationSchema={loginValidationSchema}
+              initialValues={{mobile: '', pin: ''}}
+              onSubmit={async values => {
+                try {
+                  const jsonValue = await AsyncStorage.getItem(values.mobile);
+                  if (jsonValue != null) {
+                    parseValue = JSON.parse(jsonValue);
+                    console.log(parseValue);
+                    if (
+                      values.mobile === parseValue.mobile &&
+                      values.pin === parseValue.pin
+                    ) {
+                      console.log('LOGIN SUCCESS');
 
-                {errors.pin && touched.pin && (
-                  <Text style={styles.errorText}>{errors.pin}</Text>
-                )}
-                <Text style={styles.forgotText}>Forgot your password?</Text>
-                <View style={styles.button}>
-                  <Buttons onPress={handleSubmit} name="SIGN IN" />
-                </View>
-              </>
-            )}
-          </Formik>
-          <Image
-            source={require('../images/02/fingerprint.png')}
-            style={styles.imgFinger}
-          />
-          <View style={styles.bottonText}>
-            <Text style={styles.textOR}>OR</Text>
-            <Text style={styles.bottomText}>USE YOUR FINGERPRINT TO LOGIN</Text>
+                      dispatch(changeUserState());
+                      console.log(state);
+                    } else {
+                      alert('Wrong Mobile Number or Mpin');
+                    }
+                  }
+                } catch (err) {
+                  console.log(err);
+                }
+              }}>
+              {({
+                handleChange,
+                handleBlur,
+                handleSubmit,
+                values,
+                errors,
+                touched,
+                isValid,
+              }) => (
+                <>
+                  <TextInput
+                    name="mobile"
+                    placeholder="   Mobile Number"
+                    placeholderTextColor="grey"
+                    style={styles.textInput}
+                    onChangeText={handleChange('mobile')}
+                    onBlur={handleBlur('mobile')}
+                    value={values.mobile}
+                  />
+                  {errors.mobile && touched.mobile && (
+                    <Text style={styles.errorText}>{errors.mobile}</Text>
+                  )}
+                  <TextInput
+                    name="pin"
+                    placeholder="   Mpin"
+                    placeholderTextColor="grey"
+                    style={styles.textInput}
+                    onChangeText={handleChange('pin')}
+                    onBlur={handleBlur('pin')}
+                    secureTextEntry={secureTextEntry}
+                    value={values.pin}
+                  />
+                  <View style={styles.iconView}>
+                    <Icon
+                      name={icon}
+                      size={25}
+                      color="grey"
+                      onPress={() => {
+                        setSecureTextEntry(!secureTextEntry);
+                        secureTextEntry ? setIcon('eye-off') : setIcon('eye');
+                      }}
+                    />
+                  </View>
+
+                  {errors.pin && touched.pin && (
+                    <Text style={styles.errorText}>{errors.pin}</Text>
+                  )}
+                  <Text style={styles.forgotText}>Forgot your password?</Text>
+                  <View style={styles.button}>
+                    <Buttons onPress={handleSubmit} name="SIGN IN" />
+                  </View>
+                </>
+              )}
+            </Formik>
+            <Image
+              source={require('../images/02/fingerprint.png')}
+              style={styles.imgFinger}
+            />
+            <View style={styles.bottonText}>
+              <Text style={styles.textOR}>OR</Text>
+              <Text style={styles.bottomText}>
+                USE YOUR FINGERPRINT TO LOGIN
+              </Text>
+            </View>
           </View>
         </View>
-      </View>
+      </ScrollView>
     </LinearGradient>
   );
 };
@@ -165,12 +176,18 @@ const styles = StyleSheet.create({
   linearGradient: {
     flex: 1,
   },
-  imgFinger: {width: 52.31, height: 54, marginTop: 150},
+  imgFinger: {
+    width: 52.31,
+    height: 54,
+    marginTop: 150,
+    bottom: Platform.OS === 'ios' ? 50 : 60,
+  },
   bottonText: {
     flexDirection: 'row',
     marginTop: 15,
     alignContent: 'center',
     justifyContent: 'center',
+    bottom: Platform.OS === 'ios' ? 50 : 60,
   },
   imgEye: {width: 24, height: 15, left: 125, bottom: 63},
   textOR: {
@@ -186,6 +203,10 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
     height: 21,
     width: 219,
+  },
+  iconView: {
+    left: 120,
+    bottom: 68,
   },
 });
 

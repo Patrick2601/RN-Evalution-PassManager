@@ -18,7 +18,7 @@ const initialState = [
   },
   {
     id: '2',
-    url: '222.youtube.com',
+    url: 'www.youtube.com',
     siteName: 'Youtube',
     folder: 'Social Media',
     userName: 'pv',
@@ -52,22 +52,60 @@ export const Slice = createSlice({
   name: 'site',
   initialState: {
     value: initialState,
-    preState: initialState 
+    preState: initialState,
   },
   reducers: {
     addSite: (state, action) => {
       state.value.push(action.payload);
       state.preState.push(action.payload);
+    },
 
+    deleteSite: (state, action) => {
+      state.value = state.value.filter(item => item.id !== action.payload.id);
+      state.preState = state.preState.filter(
+        item => item.id !== action.payload.id,
+      );
+    },
+    editSite: (state, action) => {
+      state.value.map(site => {
+        if (site.id === action.payload.id) {
+          site.url = action.payload.url;
+          site.siteName = action.payload.siteName;
+          site.folder = action.payload.folder;
+          site.userName = action.payload.userName;
+          site.sitePassword = action.payload.sitePassword;
+          site.notes = action.payload.notes;
+        }
+      });
+      state.preState.map(site => {
+        if (site.id === action.payload.id) {
+          site.url = action.payload.url;
+          site.siteName = action.payload.siteName;
+          site.folder = action.payload.folder;
+          site.userName = action.payload.userName;
+          site.sitePassword = action.payload.sitePassword;
+          site.notes = action.payload.notes;
+        }
+      });
     },
     filter: (state, action) => {
       state.value = state.preState.filter(item =>
         item.siteName.toLowerCase().includes(action.payload.toLowerCase()),
       );
     },
+    filterDropDown: (state, action) => {
+      if (action.payload == 'All') {
+        state.value = state.preState;
+      } else {
+        state.value = state.preState.filter(site =>
+          site.folder.toLowerCase().includes(action.payload.toLowerCase()),
+        );
+      }
+    },
   },
 });
 
-export const {addSite,filter} = Slice.actions;
+export const {addSite, editSite, filter, deleteSite, filterDropDown} =
+  Slice.actions;
 
 export default Slice.reducer;

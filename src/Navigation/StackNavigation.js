@@ -2,57 +2,28 @@
 import {Text, Pressable} from 'react-native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {NavigationContainer} from '@react-navigation/native';
-import PassManager from '../screens/PassManager';
 import AuthScreen from '../screens/AuthScreen';
-import AddSite from '../screens/AddSite';
-import EditSite from '../screens/SiteDetails';
-import SiteDetails from '../screens/SiteDetails';
+
+import SiteManager from './SiteManager';
+import {useSelector} from 'react-redux';
 
 const Stack = createNativeStackNavigator();
 const StackNavigation = () => {
+  const state = useSelector(state => state.user.userState);
   return (
     <NavigationContainer>
       <Stack.Navigator
         initialRouteName="Auth Screen"
         screenOptions={{headerShown: false}}>
-        <Stack.Screen name="Auth Screen" component={AuthScreen} />
-        <Stack.Screen
-          name="PASS MANAGER"
-          component={PassManager}
-          options={{headerShown: false}}
-        />
-        <Stack.Screen
-          name="Add Site"
-          component={AddSite}
-          options={{
-            headerShown: true,
-            headerBackTitleVisible: false,
-            headerTitleStyle: {fontSize: 20},
-            headerStyle: {backgroundColor: '#0E85FF'},
-            headerTitleAlign: 'left',
-            headerTintColor: 'white',
-          }}
-        />
-        <Stack.Screen
-          name="Edit Site"
-          component={EditSite}
-          options={({navigation}) => ({
-            headerShown: true,
-            headerBackTitleVisible: false,
-            headerTitle: 'Site Details',
-            headerTitleStyle: {fontSize: 20},
-            headerStyle: {backgroundColor: '#0E85FF'},
-            headerTitleAlign: 'left',
-            headerTintColor: 'white',
-            headerRight: () => (
-              <Pressable
-                onPress={() => navigation.push('Edit Site')}
-                color="#ffff00">
-                <Text style={{color: 'white', fontSize: 20}}>Edit</Text>
-              </Pressable>
-            ),
-          })}
-        />
+        {!state ? (
+          <Stack.Screen name="Auth Screen" component={AuthScreen} />
+        ) : (
+          <Stack.Screen
+            name="Site Manager"
+            component={SiteManager}
+            options={{headerShown: false}}
+          />
+        )}
       </Stack.Navigator>
     </NavigationContainer>
   );

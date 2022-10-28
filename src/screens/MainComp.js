@@ -1,27 +1,49 @@
 import React from 'react';
+import Clipboard from '@react-native-clipboard/clipboard';
+import Toast from 'react-native-simple-toast';
 
-import {StyleSheet, Text, Pressable, View, Image} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  TouchableOpacity,
+  Pressable,
+} from 'react-native';
 
 export const MainComp = ({
   title = 'Facebook',
   url = 'www.facebook.com',
   uri,
+  imgUrl,
   onPress,
+  onLongPress,
+  password,
 }) => {
+  const copyPassword = password => {
+    Clipboard.setString(password);
+    Toast.show(`Password Copied`, Toast.SHORT);
+  };
   return (
     <View style={styles.body}>
-      <Pressable onPress={onPress}>
+      <TouchableOpacity onPress={onPress} onLongPress={onLongPress}>
         <View style={styles.bodytop}>
           <Image source={uri ? uri : imgUrl} style={styles.logo} />
           <View style={styles.bodyin}>
             <Text style={styles.text1}>{title}</Text>
-            <Text style={styles.text2}>Copy Password</Text>
+            <Pressable
+              onPress={() => {
+                copyPassword(password);
+                alert(password);
+              }}>
+              <Text style={styles.text2}>Copy Password</Text>
+            </Pressable>
           </View>
         </View>
         <View style={styles.view}>
           <Text style={styles.text3}>{url}</Text>
         </View>
-      </Pressable>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -29,10 +51,9 @@ export const MainComp = ({
 const styles = StyleSheet.create({
   body: {
     height: 120,
-    width: 345,
     borderRadius: 12.6,
     marginTop: 10,
-    marginLeft: 22,
+    marginHorizontal: 20,
     borderRight: 5,
     backgroundColor: '#FFFFFF',
     shadowOpacity: 0.5,

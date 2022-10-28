@@ -1,16 +1,20 @@
 import React from 'react';
 import {View, FlatList, StyleSheet} from 'react-native';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {MainComp} from './MainComp';
+import {deleteSite} from '../Redux/Reducers/Slice';
 
 const SiteList = ({navigation}) => {
+  const dispatch = useDispatch();
   const siteData = useSelector(state => state.site.value);
   const renderItem = ({item}) => (
     <MainComp
       title={item.siteName}
       uri={item.icon}
       url={item.url}
-      onPress={() => navigation.navigate('Edit Site', {item})}
+      password={item.sitePassword}
+      onPress={() => navigation.navigate('Site Details', {item})}
+      onLongPress={() => dispatch(deleteSite(item))}
     />
   );
 
@@ -28,8 +32,8 @@ export default SiteList;
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    paddingTop: 30,
+    flex: 2,
+    height: 600,
     width: '100%',
     backgroundColor: '#FAFAFA',
   },

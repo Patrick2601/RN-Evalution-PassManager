@@ -71,11 +71,12 @@ const styles = StyleSheet.create({
     backgroundColor: '#0E85FF',
     alignItems: 'center',
     justifyContent: 'center',
-    width: 200,
+    width: 170,
     height: 60,
     flexDirection: 'row',
   },
   button1: {
+    position:'absolute',
     backgroundColor: '#0E85FF',
     width: 200,
     height: 60,

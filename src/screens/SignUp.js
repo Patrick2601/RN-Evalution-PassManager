@@ -1,13 +1,13 @@
-
-import React ,{useState}from 'react';
-import {SafeAreaView, StyleSheet, View} from 'react-native';
+import React, {useState} from 'react';
+import {SafeAreaView, ScrollView, StyleSheet, View} from 'react-native';
 import {Formik, Field} from 'formik';
 import * as yup from 'yup';
 import CustomInput from '../components/CustomInput';
 import {Buttons} from '../components/Buttons';
 import LinearGradient from 'react-native-linear-gradient';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import  Icon  from 'react-native-vector-icons/Feather';
+import Icon from 'react-native-vector-icons/Feather';
+import Toast from 'react-native-simple-toast';
 
 const SignUp = ({navigation}) => {
   const signUpValidationSchema = yup.object().shape({
@@ -32,22 +32,23 @@ const SignUp = ({navigation}) => {
       <LinearGradient
         colors={['#20BBFF', '#0E85FF']}
         style={styles.linearGradient}>
+          <ScrollView>
         <SafeAreaView style={styles.container}>
           <View style={styles.signupContainer}>
             <Formik
-               validationSchema={signUpValidationSchema}
+              validationSchema={signUpValidationSchema}
               initialValues={{
                 mobile: '',
                 pin: '',
                 confirmpin: '',
               }}
-              onSubmit={async (values,{resetForm}) => {
+              onSubmit={async (values, {resetForm}) => {
                 try {
-                  
                   const jsonValue = JSON.stringify(values);
                   console.log(jsonValue);
                   await AsyncStorage.setItem(values.mobile, jsonValue);
-                   resetForm({values:''})
+                  resetForm({values: ''});
+                  Toast.show('Congrats!!!Success\nSignin to access the vault');
                   navigation.navigate('SIGN IN');
                 } catch (err) {
                   console.log(err);
@@ -82,15 +83,16 @@ const SignUp = ({navigation}) => {
                     value={values.confirmpin}
                   />
                   <View style={{left: 120, bottom: 68}}>
-                  <Icon name={icon}
-                    size={25}
-                    color="grey"
-                    onPress={() => {
-                      setSecureTextEntry(!secureTextEntry);
-                      secureTextEntry ? setIcon('eye-off') : setIcon('eye');
-                    }}/>
-               
-                </View>
+                    <Icon
+                      name={icon}
+                      size={25}
+                      color="grey"
+                      onPress={() => {
+                        setSecureTextEntry(!secureTextEntry);
+                        secureTextEntry ? setIcon('eye-off') : setIcon('eye');
+                      }}
+                    />
+                  </View>
                   <View style={styles.button}>
                     <Buttons onPress={handleSubmit} name="SIGN IN" />
                   </View>
@@ -99,6 +101,7 @@ const SignUp = ({navigation}) => {
             </Formik>
           </View>
         </SafeAreaView>
+        </ScrollView>
       </LinearGradient>
     </>
   );

@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Image, StyleSheet} from 'react-native';
+import {View, Image, StyleSheet, ScrollView} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import TopNav from '../Navigation/TopNav';
 import LinearGradient from 'react-native-linear-gradient';
@@ -55,6 +55,5 @@ const styles = StyleSheet.create({
     flex: 1,
     width: '100%',
     marginTop: 10,
-
   },
 });
