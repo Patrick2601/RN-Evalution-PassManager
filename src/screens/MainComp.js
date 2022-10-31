@@ -34,7 +34,6 @@ export const MainComp = ({
             <Pressable
               onPress={() => {
                 copyPassword(password);
-                alert(password);
               }}>
               <Text style={styles.text2}>Copy Password</Text>
             </Pressable>
@@ -56,7 +55,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 20,
     borderRight: 5,
     backgroundColor: '#FFFFFF',
-    shadowOpacity: 0.5,
+    shadowOpacity: 0.3,
     paddingEnd: 15,
   },
   bodytop: {
@@ -71,6 +70,7 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
   text1: {
+    textAlign: 'right',
     height: 24,
     width: 83,
     color: '#0E85FF',

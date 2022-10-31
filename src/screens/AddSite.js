@@ -74,7 +74,7 @@ const AddSite = ({navigation}) => {
             isValid,
           }) => (
             <>
-              <ScrollView style={{width: 323}}>
+              <ScrollView style={{width: '90%'}}>
                 <Text style={styles.text}>URL</Text>
                 <Field
                   component={CustomInput}
@@ -105,8 +105,9 @@ const AddSite = ({navigation}) => {
                   name="folder"
                   onChangeText={handleChange('folder')}
                   value={selected}
-                  boxStyles={{width: 321, height: 44, marginBottom: 20}}
-                  inputStyles={{width: 200, height: 44}}
+                  boxStyles={styles.boxStyles}
+                  inputStyles={styles.inputStyles}
+                  dropdownTextStyles={styles.dropdownTextStyles}
                 />
                 <Text style={styles.text}>User Name</Text>
 
@@ -181,7 +182,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#ffffff',
   },
   signupContainer: {
-    width: '80%',
+    width: '100%',
     alignItems: 'center',
     padding: 10,
     marginTop: 20,
@@ -190,19 +191,19 @@ const styles = StyleSheet.create({
     color: 'black',
     fontSize: 16,
     height: 41,
-    width: 321,
+    width: '100%',
     backgroudColor: '#FFFFFF',
     borderColor: 'grey',
     borderWidth: StyleSheet.hairlineWidth,
     borderRadius: 4,
     marginBottom: 20,
   },
-  eyeIcon: {left: 280, bottom: 54},
+  eyeIcon: {left: 290, bottom: 54},
   notesField: {
     color: 'black',
     fontSize: 16,
     height: 81,
-    width: 321,
+    width: '100%',
     backgroudColor: '#FFFFFF',
     borderColor: 'grey',
     borderWidth: StyleSheet.hairlineWidth,
@@ -212,6 +213,7 @@ const styles = StyleSheet.create({
   buttons: {
     flexDirection: 'row',
     marginTop: Platform.OS === 'ios' ? 60 : 10,
+    justifyContent: 'center',
   },
   text: {
     height: 24,
@@ -220,12 +222,14 @@ const styles = StyleSheet.create({
     color: '#949CA5',
     marginBottom: 5,
   },
-
   errorText: {
     fontSize: 10,
     color: 'red',
     top: 20,
   },
+  boxStyles: {width: '100%', height: 44, marginBottom: 20},
+  inputStyles: {width: 200, height: 44, color: 'black'},
+  dropdownTextStyles: {color: 'black'},
 });
 
 export default AddSite;

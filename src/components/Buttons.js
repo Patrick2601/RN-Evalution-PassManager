@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   container1: {
-    backgroundColor: '#0E85FF',
+   backgroundColor: '#0E85FF',
     alignItems: 'center',
     justifyContent: 'center',
     width: 170,
@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
   button1: {
     position:'absolute',
     backgroundColor: '#0E85FF',
-    width: 200,
+    width: "100%",
     height: 60,
     alignItems: 'center',
     justifyContent: 'center',

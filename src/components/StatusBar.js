@@ -76,7 +76,7 @@ const StatusBar = () => {
             style={styles.image4}
           />
         </Pressable>
-        <Pressable onPress={()=>dispatch(changeUserState())}>
+        <Pressable onPress={() => dispatch(changeUserState())}>
           <Image
             source={require('../images/06/Group/profile.png')}
             style={styles.image5}
@@ -114,16 +114,23 @@ const StatusBar = () => {
         <View style={styles.container2}>
           <View style={styles.bodytop2}>
             <Text style={styles.text1}>Sites</Text>
-            <Text style={styles.text2}>{title}</Text>
-            <View style={styles.oval}>
-              <Text style={styles.number}>{siteData.length}</Text>
+            <View
+              style={{
+                flexDirection: 'row',
+                width: '55%',
+                left: 30,
+              }}>
+              <Text style={styles.text2}>{title}</Text>
+              <View style={styles.oval}>
+                <Text style={styles.number}>{siteData.length}</Text>
+              </View>
+              <Pressable onPress={setDropDown}>
+                <Image
+                  source={require('../images/06/heading/PathCopy.png')}
+                  style={styles.image6}
+                />
+              </Pressable>
             </View>
-            <Pressable onPress={setDropDown}>
-              <Image
-                source={require('../images/06/heading/PathCopy.png')}
-                style={styles.image6}
-              />
-            </Pressable>
           </View>
           <View style={styles.bottomborder} />
         </View>
@@ -153,7 +160,7 @@ const styles = StyleSheet.create({
     marginTop: 2,
     height: 40,
     justifyContent: 'space-between',
-    paddingRight: 10,
+    paddingRight: 40,
   },
   bottomborder: {
     borderBottomWidth: 4,
@@ -184,7 +191,7 @@ const styles = StyleSheet.create({
   },
   image6: {
     marginTop: 13,
-    marginLeft: 2,
+    left:5
   },
   text1: {
     height: 55,
@@ -198,9 +205,7 @@ const styles = StyleSheet.create({
     height: 27,
     fontSize: 20,
     marginTop: 4,
-    marginLeft: 120,
     color: 'black',
-    left: 8,
   },
   number: {
     height: 22,
@@ -257,6 +262,7 @@ const styles = StyleSheet.create({
   },
   dropdownText: {
     padding: 5,
+    color: 'black',
   },
   modalText: {
     alignSelf: 'center',

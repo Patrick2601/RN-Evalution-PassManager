@@ -15,11 +15,9 @@ import LinearGradient from 'react-native-linear-gradient';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Icon from 'react-native-vector-icons/Feather';
 import {useDispatch} from 'react-redux';
-import {useSelector} from 'react-redux';
 import {changeUserState} from '../Redux/Reducers/userSlice';
 const SignIn1 = ({navigation}) => {
   const dispatch = useDispatch();
-  const state = useSelector(state => state.user.userState);
 
   const loginValidationSchema = yup.object().shape({
     mobile: yup
@@ -54,10 +52,7 @@ const SignIn1 = ({navigation}) => {
                       values.mobile === parseValue.mobile &&
                       values.pin === parseValue.pin
                     ) {
-                      console.log('LOGIN SUCCESS');
-
                       dispatch(changeUserState());
-                      console.log(state);
                     } else {
                       alert('Wrong Mobile Number or Mpin');
                     }
@@ -84,6 +79,7 @@ const SignIn1 = ({navigation}) => {
                     onChangeText={handleChange('mobile')}
                     onBlur={handleBlur('mobile')}
                     value={values.mobile}
+                    keyboardType="numeric"
                   />
                   {errors.mobile && touched.mobile && (
                     <Text style={styles.errorText}>{errors.mobile}</Text>
@@ -97,7 +93,12 @@ const SignIn1 = ({navigation}) => {
                     onBlur={handleBlur('pin')}
                     secureTextEntry={secureTextEntry}
                     value={values.pin}
+                    keyboardType="numeric"
                   />
+
+                  {errors.pin && touched.pin && (
+                    <Text style={styles.errorText}>{errors.pin}</Text>
+                  )}
                   <View style={styles.iconView}>
                     <Icon
                       name={icon}
@@ -109,10 +110,6 @@ const SignIn1 = ({navigation}) => {
                       }}
                     />
                   </View>
-
-                  {errors.pin && touched.pin && (
-                    <Text style={styles.errorText}>{errors.pin}</Text>
-                  )}
                   <Text style={styles.forgotText}>Forgot your password?</Text>
                   <View style={styles.button}>
                     <Buttons onPress={handleSubmit} name="SIGN IN" />
@@ -161,6 +158,7 @@ const styles = StyleSheet.create({
   errorText: {
     fontSize: 10,
     color: 'red',
+    bottom: 10,
   },
   forgotText: {
     color: '#ffffff',
@@ -189,7 +187,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     bottom: Platform.OS === 'ios' ? 50 : 60,
   },
-  imgEye: {width: 24, height: 15, left: 125, bottom: 63},
+  imgEye: {width: 24, height: 15, left: 125, },
   textOR: {
     fontSize: 18,
     fontWeight: 'bold',
@@ -206,7 +204,7 @@ const styles = StyleSheet.create({
   },
   iconView: {
     left: 120,
-    bottom: 68,
+    bottom: 70,
   },
 });
 

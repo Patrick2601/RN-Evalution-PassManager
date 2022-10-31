@@ -18,7 +18,6 @@ const SiteDetails = ({navigation}) => {
   const siteDetails = route.params.item;
   const [icon, setIcon] = useState('eye');
   const [secureTextEntry, setSecureTextEntry] = useState(true);
-  console.log(siteDetails);
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.signupContainer}>
@@ -127,19 +126,19 @@ const styles = StyleSheet.create({
     backgroundColor: '#ffffff',
   },
   topbar: {
-    width: 900,
-    paddingLeft: 200,
+    width: '110%',
     backgroundColor: '#0E85FF',
     flexDirection: 'row',
     height: 60,
     bottom: 30,
+    justifyContent: 'space-between',
   },
   text2: {
     height: 28,
     width: 110,
     fontSize: 20,
     marginTop: 20,
-    marginLeft: 30,
+    marginLeft: 60,
     color: '#FFFFFF',
   },
   text3: {
@@ -147,15 +146,15 @@ const styles = StyleSheet.create({
     width: 103,
     fontSize: 20,
     marginTop: 20,
-    marginLeft: 150,
+    left: 40,
     color: '#FFFFFF',
   },
   icon: {
     marginTop: 20,
-    marginLeft: 80,
+    marginLeft: 20,
   },
   signupContainer: {
-    width: '80%',
+    width: '100%',
     alignItems: 'center',
     padding: 10,
     marginTop: 20,

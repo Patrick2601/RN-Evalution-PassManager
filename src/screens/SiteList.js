@@ -32,7 +32,7 @@ export default SiteList;
 
 const styles = StyleSheet.create({
   container: {
-    flex: 2,
+    flex:2,
     height: 600,
     width: '100%',
     backgroundColor: '#FAFAFA',

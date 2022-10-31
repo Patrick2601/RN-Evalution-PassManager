@@ -81,6 +81,7 @@ const EditDetails = ({navigation}) => {
                 value={selected}
                 boxStyles={styles.boxStyle}
                 inputStyles={styles.inputStyles}
+                dropdownTextStyles= {{color: 'black'}}
                 maxHeight={100}
               />
               <Text style={styles.text}>User Name</Text>
@@ -176,6 +177,7 @@ const styles = StyleSheet.create({
   inputStyles: {
     width: 200,
     height: 44,
+    color:'black'
   },
 });
 

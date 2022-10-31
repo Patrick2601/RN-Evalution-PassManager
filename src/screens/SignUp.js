@@ -63,6 +63,8 @@ const SignUp = ({navigation}) => {
                     placeholderTextColor="grey"
                     style={styles.field}
                     value={values.mobile}
+                    keyboardType='numeric'
+
                   />
                   <Field
                     component={CustomInput}
@@ -72,6 +74,8 @@ const SignUp = ({navigation}) => {
                     secureTextEntry={secureTextEntry}
                     style={styles.field}
                     value={values.pin}
+                    keyboardType='numeric'
+
                   />
                   <Field
                     component={CustomInput}
@@ -81,6 +85,8 @@ const SignUp = ({navigation}) => {
                     secureTextEntry={secureTextEntry}
                     style={styles.field}
                     value={values.confirmpin}
+                    keyboardType='numeric'
+
                   />
                   <View style={{left: 120, bottom: 68}}>
                     <Icon
